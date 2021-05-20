@@ -10,8 +10,7 @@
 <form method="POST">
     <input id="A">
     <input id="B">
-
-    <input onclick="add(event)" type="submit" data-url="{% url 'api_v1:add' %}" value="add">
+    <input type="submit" onclick="add(event)" data-url="{% url 'api_v1:add' %}" value="add">
     <input type="submit" onclick="subtract(event)" data-url="{% url 'api_v1:subtract' %}" value="subtract">
     <input type="submit" onclick="multiply(event)" data-url="{% url 'api_v1:multiply' %}" value="multiply">
     <input type="submit" onclick="divide(event)" data-url="{% url 'api_v1:divide' %}" value="divide">
@@ -19,4 +18,142 @@
 <div style="display: inline-block" id="container">
     <h3>Answers:</h3>
 </div>
+<script>
+function getCookie(name) {
+    if (!document.cookie) {
+        return null;
+}
+    const xsrfCookies = document.cookie.split(';')
+    .map(c => c.trim())
+    .filter(c => c.startsWith(name + '='));
+    if (xsrfCookies.length === 0) {
+        return null;
+    }
+    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+}
+
+
+async function add(event) {
+    event.preventDefault()
+    const csrfToken = getCookie('csrftoken')
+    const headers = new Headers({
+        'Content-Type': 'x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+        });
+    let button = event.target
+    let url = button.dataset.url
+    let a = document.getElementById("A").value
+    let b = document.getElementById("B").value
+    let response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({"A": a, "B": b})
+        })
+    json = await response.json()
+    let div = document.getElementById('container')
+    let h3 = document.createElement('h3')
+    let text = document.createTextNode(json.result)
+    h3.appendChild(text)
+    div.appendChild(h3)
+    if (json.result == 'Enter whole numbers') {
+        h3.classList.add('Error')
+        }
+    else {
+        h3.classList.add('Calculated')
+        }
+    }
+
+    async function subtract(event) {
+    event.preventDefault()
+    const csrfToken = getCookie('csrftoken')
+    const headers = new Headers({
+        'Content-Type': 'x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+        });
+    let button = event.target
+    let url = button.dataset.url
+    let a = document.getElementById("A").value
+    let b = document.getElementById("B").value
+    let response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({"A": a, "B": b})
+        })
+    json = await response.json()
+    let div = document.getElementById('container')
+    let h3 = document.createElement('h3')
+    let text = document.createTextNode(json.result)
+    h3.appendChild(text)
+    div.appendChild(h3)
+    if (json.result == 'Enter whole numbers') {
+        h3.classList.add('Error')
+        }
+    else {
+        h3.classList.add('Calculated')
+        }
+    }
+
+    async function multiply(event) {
+    event.preventDefault()
+    const csrfToken = getCookie('csrftoken')
+    const headers = new Headers({
+        'Content-Type': 'x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+        });
+    let button = event.target
+    let url = button.dataset.url
+    let a = document.getElementById("A").value
+    let b = document.getElementById("B").value
+    let response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({"A": a, "B": b})
+        })
+    json = await response.json()
+    let div = document.getElementById('container')
+    let h3 = document.createElement('h3')
+    let text = document.createTextNode(json.result)
+    h3.appendChild(text)
+    div.appendChild(h3)
+    if (json.result == 'Enter whole numbers') {
+        h3.classList.add('Error')
+        }
+    else {
+        h3.classList.add('Calculated')
+        }
+    }
+
+
+    async function divide(event) {
+    event.preventDefault()
+    const csrfToken = getCookie('csrftoken')
+    const headers = new Headers({
+        'Content-Type': 'x-www-form-urlencoded',
+        'X-CSRFToken': csrfToken
+        });
+    let button = event.target
+    let url = button.dataset.url
+    let a = document.getElementById("A").value
+    let b = document.getElementById("B").value
+    let response = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({"A": a, "B": b})
+        })
+    json = await response.json()
+    let div = document.getElementById('container')
+    let h3 = document.createElement('h3')
+    let text = document.createTextNode(json.result)
+    h3.appendChild(text)
+    div.appendChild(h3)
+    if (json.result == 'Enter whole numbers' || json.result == 'Divided by zero') {
+        h3.classList.add('Error')
+        }
+    else {
+        h3.classList.add('Calculated')
+        }
+    }
+
+</script>
 </body>
+</html>
