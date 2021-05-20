@@ -1,66 +1,84 @@
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 import json
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 
 def add(request):
-    num = json.loads(request.body)
-    if num['A'] and num['B']:
-        total = num['A'] + num['B']
-        response_data = {
-            'result': str(total),
-            'method': request.method
-        }
-
-    response = HttpResponse(json.dumps(response_data))
-    response['Content-Type'] = 'application/json'
-    return response
+    num = request.body
+    if num:
+        nums = json.loads(num)
+        try:
+            nums['A'] = int(nums['A'])
+            nums['B'] = int(nums['B'])
+            total = nums['A'] + nums['B']
+            response_data = {
+                'result': str(total)
+            }
+            response = JsonResponse(response_data)
+        except:
+            respnse_data = {
+                'result': 'Enter whole numbers'
+            }
+            response = JsonResponse(response_data)
+            response.status_code = 400
 
 def subtract(request):
-    num = json.loads(request.body)
-    if num['A'] and num['B']:
-        total = num['A'] - num['B']
-        response_data = {
-            'result': str(total),
-            'method': request.method
-        }
-
-    response = HttpResponse(json.dumps(response_data))
-    response['Content-Type'] = 'application/json'
-    return response
+    num = request.body
+    if num:
+        nums = json.loads(num)
+        try:
+            nums['A'] = int(nums['A'])
+            nums['B'] = int(nums['B'])
+            total = nums['A'] - nums['B']
+            response_data = {
+                'result': str(total)
+            }
+            response = JsonResponse(response_data)
+        except:
+            respnse_data = {
+                'result': 'Enter whole numbers'
+            }
+            response = JsonResponse(response_data)
+            response.status_code = 400
 
 def multiply(request):
-    num = json.loads(request.body)
-    if num['A'] and num['B']:
-        total = num['A'] * num['B']
-        response_data = {
-            'result': str(total),
-            'method': request.method
-        }
-    
-
-    response = HttpResponse(json.dumps(response_data))
-    response['Content-Type'] = 'application/json'
-    return response
+    num = request.body
+    if num:
+        nums = json.loads(num)
+        try:
+            nums['A'] = int(nums['A'])
+            nums['B'] = int(nums['B'])
+            total = nums['A'] * nums['B']
+            response_data = {
+                'result': str(total)
+            }
+            response = JsonResponse(response_data)
+        except:
+            respnse_data = {
+                'result': 'Enter whole numbers'
+            }
+            response = JsonResponse(response_data)
+            response.status_code = 400
 
 def divide(request):
-    try:
-        num = json.loads(request.body)
-        if num['A'] and num['B']:
-            total = num['A'] // num['B']
+    num = request.body
+    if num:
+        nums = json.loads(num)
+        try:
+            nums['A'] = int(nums['A'])
+            nums['B'] = int(nums['B'])
+            total = nums['A'] // nums['B']
             response_data = {
-                'result': str(total),
-                'method': request.method
+                'result': str(total)
             }
-    except:
-        if num['A'] or num['B'] == 0:
-            response_data = {
-                'result': 'Division by zero!',
-                'method': request.method
+            response = JsonResponse(response_data)
+        except:
+            respnse_data = {
+                'result': 'Enter whole numbers'
             }
+            response = JsonResponse(response_data)
+            response.status_code = 400
 
-    response = HttpResponse(json.dumps(response_data))
-    response['Content-Type'] = 'application/json'
-    return response
+

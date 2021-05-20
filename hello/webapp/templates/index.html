@@ -1,13 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
-    <div id='container'>
-    </div>
+<form method="POST">
+    <input id="A">
+    <input id="B">
+
+    <input onclick="add(event)" type="submit" data-url="{% url 'api_v1:add' %}" value="add">
+    <input type="submit" onclick="subtract(event)" data-url="{% url 'api_v1:subtract' %}" value="subtract">
+    <input type="submit" onclick="multiply(event)" data-url="{% url 'api_v1:multiply' %}" value="multiply">
+    <input type="submit" onclick="divide(event)" data-url="{% url 'api_v1:divide' %}" value="divide">
+</form>
+<div style="display: inline-block" id="container">
+    <h3>Answers:</h3>
+</div>
 </body>
-</html>
